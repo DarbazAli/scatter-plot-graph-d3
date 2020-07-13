@@ -5,6 +5,30 @@ const container = d3.select('.container')
     .text('Doping in Professional Bicycle Racing')
 
 
+
+
+// LEGEND
+const legend = container
+                .append("div")
+                .attr("id", "legend");
+
+legend
+    .append("h2")
+    .text("Cycling Record")
+
+
+const ul = legend
+            .append("ul");
+        ul
+            .append("li")
+            .text("doping allegations");
+        ul
+            .append("li")
+            .text("no doping allegations");
+
+
+
+
 // Create margins
 const margin = {
     top: 20,
