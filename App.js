@@ -1,4 +1,4 @@
-// **User Story #1:** I can see a title element that has a corresponding id="title".
+
 const container = d3.select('.container')
     .append('h2')
     .attr('id', 'title')
@@ -12,9 +12,9 @@ const legend = container
                 .append("div")
                 .attr("id", "legend");
 
-legend
-    .append("h2")
-    .text("Cycling Record")
+// legend
+//     .append("h3")
+//     .text("Cycling Record")
 
 
 const ul = legend
@@ -81,17 +81,15 @@ const drawTooltip = ( d, tooltip ) => {
     .style("opacity", 1)
 
     .style("left", `${d3.event.layerX - 70}px`)
-    .style("top", `${d3.event.layerY - 10}px`)
+    .style("top", `${d3.event.layerY - 20}px`)
     .attr("data-year", d["Year"])
     .text(() => {
 
-        // getFullYear() allows to retrieve the four-digit year 
         let year = d["Year"].getFullYear();
-        // d["Time"] is as well an instance of a date object
-        // getMinutes() and getSeconds() allow to retrieve the pertinent information
         let record = d["Time"].getMinutes() + ":" + d["Time"].getSeconds();
         let rider = d["Name"];
-        return `${year} ${record} ${rider}`;
+        let dopping = d["Doping"]
+        return `${year} ${record} ${rider} ${dopping}`;
     })
 }
 
@@ -163,7 +161,7 @@ const drawScatterPlot = data => {
 
         // CSS Attributes
         .attr('class', 'dot')
-        .attr("fill", (d) => (d["Doping"] == "") ? "#163D90" : "#E94180" )
+        .attr("fill", (d) => (d["Doping"] == "") ? "#EF8536" : "#3A76AF" )
 
 
 }
