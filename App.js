@@ -50,6 +50,27 @@ const parseTimeRecord = d3.timeParse("%M:%S");
 const parseTimeYear = d3.timeParse("%Y");
 
 
+// Create tooltip drawer function
+const drawTooltip = ( d, tooltip ) => {
+    tooltip 
+
+    .style("opacity", 1)
+
+    .style("left", `${d3.event.layerX - 70}px`)
+    .style("top", `${d3.event.layerY - 10}px`)
+    .attr("data-year", d["Year"])
+    .text(() => {
+
+        // getFullYear() allows to retrieve the four-digit year 
+        let year = d["Year"].getFullYear();
+        // d["Time"] is as well an instance of a date object
+        // getMinutes() and getSeconds() allow to retrieve the pertinent information
+        let record = d["Time"].getMinutes() + ":" + d["Time"].getSeconds();
+        let rider = d["Name"];
+        return `${year} ${record} ${rider}`;
+    })
+}
+
 
 
 // Define drawer function
@@ -86,12 +107,25 @@ const drawScatterPlot = data => {
 
 
 
+    // Create Tooltip
+    const tooltip = container.append('div')
+        .attr('id', 'tooltip');
+
+
+
     // Plot dots
     group.selectAll('circle')
         .data(data)
         .enter()
         .append('circle')
 
+
+        // hover events
+        .on("mouseenter", (d) => drawTooltip(d, tooltip))
+        .on("mouseout", () => {
+            tooltip
+                .style("opacity", 0);
+        })
 
         // Data Values
         .attr('data-xvalue', d => d["Year"])
@@ -106,7 +140,7 @@ const drawScatterPlot = data => {
         // CSS Attributes
         .attr('class', 'dot')
         .attr("fill", (d) => (d["Doping"] == "") ? "#163D90" : "#E94180" )
-    
+
 
 }
 
