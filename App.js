@@ -51,3 +51,54 @@ const parseTimeYear = d3.timeParse("%Y");
 
 
 
+
+// Define drawer function
+const drawScatterPlot = data => {
+
+    // format data
+    data.forEach( item => {
+        item["Time"] = parseTimeRecord(item["Time"]);
+        item["Year"] = parseTimeYear(item["Year"])
+    });
+
+    // define domains for scales
+    // d3.extent returns the minimum and maximum values
+    xScale.domain(d3.extent( data, d => d["Year"]));
+    yScale.domain(d3.extent( data, d => d["Time"]));
+
+
+    // Create Axes
+    const xAxis = d3.axisBottom( xScale )
+    const yAxis = d3.axisLeft( yScale )
+    .tickFormat(d3.timeFormat("%M:%S"));
+
+
+
+    // append xAxis to groups
+    group.append('g')
+        .attr('id', 'x-axis')
+        .attr('transform', `translate(0, ${hight})`)
+        .call(xAxis);
+
+    group.append('g')
+        .attr('id', 'y-axis')
+        .call(yAxis)
+
+
+
+    
+
+
+}
+
+
+
+const apiURL = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
+
+fetch( apiURL )
+.then( res => res.json())
+.then( json => {
+    const data = json;
+
+    drawScatterPlot( data );
+})
