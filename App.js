@@ -86,19 +86,41 @@ const drawScatterPlot = data => {
 
 
 
-    
+    // Plot dots
+    group.selectAll('circle')
+        .data(data)
+        .enter()
+        .append('circle')
 
+
+        // Data Values
+        .attr('data-xvalue', d => d["Year"])
+        .attr('data-yvalue', d => d["Time"])
+
+
+        // coordinations
+        .attr('cx', d => xScale(d["Year"]))
+        .attr('cy', d => yScale(d["Time"]))
+        .attr('r', 5)
+
+        // CSS Attributes
+        .attr('class', 'dot')
+        .attr("fill", (d) => (d["Doping"] == "") ? "#163D90" : "#E94180" )
+    
 
 }
 
 
-
+// API URL
 const apiURL = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
+
+// Fetch data with fetch API
 fetch( apiURL )
 .then( res => res.json())
 .then( json => {
     const data = json;
 
+    // When data is loaded, run the drawer function
     drawScatterPlot( data );
 })
