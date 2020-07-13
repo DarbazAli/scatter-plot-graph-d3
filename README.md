@@ -1,5 +1,7 @@
 # ScatterPlot Graph with D3.js
 
+![alt text](scatter-plot-banner.png "scatterplot graph")
+
 - [x] **User Story #1:** I can see a title element that has a corresponding id="title".
 
 - [x] **User Story #2:** I can see an x-axis that has a corresponding id="x-axis".
